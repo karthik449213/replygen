@@ -81,22 +81,34 @@ ReplyGen is a modern web application that generates professional email replies u
 
 ## Deployment Strategy
 
+### Architecture Overview
+- **Separation**: Frontend and backend deployed separately for optimal performance
+- **Frontend**: Static React SPA deployed to Netlify CDN
+- **Backend**: Node.js API server deployed to Render with auto-scaling
+- **Communication**: Frontend uses environment-aware API client for cross-origin requests
+
 ### Build Process
-- **Frontend**: Vite builds optimized React application to `dist/public`
-- **Backend**: esbuild bundles Node.js application to `dist/index.js`
-- **Assets**: Static assets served from build directory
+- **Frontend**: `vite build` creates optimized static files in `dist/public`
+- **Backend**: `esbuild` bundles Node.js server to `dist/server.js`
+- **Assets**: Static assets served from CDN (Netlify)
 
 ### Environment Configuration
-- **Development**: Uses tsx for hot reload and Vite dev server
-- **Production**: Serves built static files with Express
-- **Database**: Requires DATABASE_URL environment variable
-- **AI Service**: Requires OPENROUTER_API_KEY environment variable
+- **Development**: Uses tsx for hot reload and Vite dev server on port 5000
+- **Production Frontend**: Netlify serves static files with API redirects
+- **Production Backend**: Render serves API endpoints with CORS enabled
+- **AI Service**: Requires OPENROUTER_API_KEY environment variable on backend
+
+### Deployment Files
+- **netlify.toml**: Netlify configuration with API redirects and build settings
+- **render.yaml**: Render service configuration with environment variables
+- **.env.production**: Frontend environment template for API URL
+- **deploy.sh**: Helper script for deployment preparation
 
 ### Hosting Requirements
-- Node.js runtime environment
-- PostgreSQL database (Neon recommended)
-- OpenRouter API access
-- Environment variable support
+- **Frontend**: Netlify (or similar static host)
+- **Backend**: Render (or similar Node.js host)
+- **External APIs**: OpenRouter account with API credits
+- **Environment Variables**: Proper secret management
 
 ## Changelog
 

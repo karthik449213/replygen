@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: replygen-backend
+    env: node
+    buildCommand: npm install && npm run build:server
+    startCommand: npm run start:server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENROUTER_API_KEY
+        sync: false
